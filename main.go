@@ -2,7 +2,11 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
+	"time"
+
+	"github.com/alexedwards/scs/v2"
 )
 
 type GlobalState struct {
@@ -10,9 +14,11 @@ type GlobalState struct {
 }
 
 var global GlobalState
+var sessionManager *scs.SessionManager
 
 func getHandler(w http.ResponseWriter, r *http.Request) {
-	component := page(global.Count, 0)
+	userCount := sessionManager.GetInt(r.Context(), "count")
+	component := page(global.Count, userCount)
 	component.Render(r.Context(), w)
 }
 
@@ -20,14 +26,15 @@ func postHandler(w http.ResponseWriter, r *http.Request) {
 	// Update state
 	r.ParseForm()
 
-	fmt.Println(r.Form.Get("user"))
-
 	// check if global button has been pressed
 	if r.Form.Has("global") {
 		global.Count++
 	}
 
-	// TODO: update session
+	if r.Form.Has("user") {
+		currentCount := sessionManager.GetInt(r.Context(), "count")
+		sessionManager.Put(r.Context(), "count", currentCount+1)
+	}
 
 	// now that we've udpated state - rerender the page
 	getHandler(w, r)
@@ -42,12 +49,21 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	// component := hello("Josh")
+	// Initialize the session.
+	sessionManager = scs.New()
+	sessionManager.Lifetime = 24 * time.Hour
 
-	// http.Handle("/", templ.Handler(component))
+	mux := http.NewServeMux()
 
-	http.HandleFunc("/", rootHandler)
+	// Handle POST and GET requests.
+	mux.HandleFunc("/", rootHandler)
 
-	fmt.Println("Listening on :3000")
-	http.ListenAndServe(":3000", nil)
+	// Add the middleware.
+	muxWithSessionMiddleware := sessionManager.LoadAndSave(mux)
+
+	// Start the server.
+	fmt.Println("listening on http://localhost:8000")
+	if err := http.ListenAndServe("localhost:8000", muxWithSessionMiddleware); err != nil {
+		log.Printf("error listening: %v", err)
+	}
 }
