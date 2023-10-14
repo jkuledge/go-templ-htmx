@@ -32,10 +32,6 @@ func Page(global, user int) templ.Component {
 		if err != nil {
 			return err
 		}
-		err = components.Form().Render(ctx, templBuffer)
-		if err != nil {
-			return err
-		}
 		if !templIsBuffer {
 			_, err = templBuffer.WriteTo(w)
 		}

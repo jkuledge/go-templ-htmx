@@ -11,6 +11,14 @@ import "bytes"
 
 import "strconv"
 
+var CountsForm = struct {
+	Global  string
+	Session string
+}{
+	Global:  "global",
+	Session: "session",
+}
+
 func Counts(global, user int) templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, w io.Writer) (err error) {
 		templBuffer, templIsBuffer := w.(*bytes.Buffer)
@@ -24,12 +32,24 @@ func Counts(global, user int) templ.Component {
 			var_1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, err = templBuffer.WriteString("<div>")
+		_, err = templBuffer.WriteString("<form id=\"countsForm\" action=\"/\" method=\"POST\" hx-post=\"/\" hx-select=\"#countsForm\" hx-swap=\"outerHTML\"><div class=\"columns\">")
 		if err != nil {
 			return err
 		}
-		var_2 := `Global: `
-		_, err = templBuffer.WriteString(var_2)
+		var var_2 = []any{"column", "has-text-centered", "is-primary", "border"}
+		err = templ.RenderCSSItems(ctx, templBuffer, var_2...)
+		if err != nil {
+			return err
+		}
+		_, err = templBuffer.WriteString("<div class=\"")
+		if err != nil {
+			return err
+		}
+		_, err = templBuffer.WriteString(templ.EscapeString(templ.CSSClasses(var_2).String()))
+		if err != nil {
+			return err
+		}
+		_, err = templBuffer.WriteString("\"><h1 class=\"title is-size-1 has-text-centered\">")
 		if err != nil {
 			return err
 		}
@@ -38,21 +58,101 @@ func Counts(global, user int) templ.Component {
 		if err != nil {
 			return err
 		}
-		_, err = templBuffer.WriteString("</div><div>")
+		_, err = templBuffer.WriteString("</h1><p class=\"subtitle has-text-centerd\">")
 		if err != nil {
 			return err
 		}
-		var_4 := `User: `
+		var_4 := `Global`
 		_, err = templBuffer.WriteString(var_4)
 		if err != nil {
 			return err
 		}
-		var var_5 string = strconv.Itoa(user)
-		_, err = templBuffer.WriteString(templ.EscapeString(var_5))
+		_, err = templBuffer.WriteString("</p><div><button class=\"button is-primary\" type=\"submit\" name=\"")
 		if err != nil {
 			return err
 		}
-		_, err = templBuffer.WriteString("</div>")
+		_, err = templBuffer.WriteString(templ.EscapeString(CountsForm.Global))
+		if err != nil {
+			return err
+		}
+		_, err = templBuffer.WriteString("\" value=\"")
+		if err != nil {
+			return err
+		}
+		_, err = templBuffer.WriteString(templ.EscapeString(CountsForm.Global))
+		if err != nil {
+			return err
+		}
+		_, err = templBuffer.WriteString("\">")
+		if err != nil {
+			return err
+		}
+		var_5 := `+1`
+		_, err = templBuffer.WriteString(var_5)
+		if err != nil {
+			return err
+		}
+		_, err = templBuffer.WriteString("</button></div></div>")
+		if err != nil {
+			return err
+		}
+		var var_6 = []any{"column", "has-text-centered", "border"}
+		err = templ.RenderCSSItems(ctx, templBuffer, var_6...)
+		if err != nil {
+			return err
+		}
+		_, err = templBuffer.WriteString("<div class=\"")
+		if err != nil {
+			return err
+		}
+		_, err = templBuffer.WriteString(templ.EscapeString(templ.CSSClasses(var_6).String()))
+		if err != nil {
+			return err
+		}
+		_, err = templBuffer.WriteString("\"><h1 class=\"title is-size-1 has-text-centered\">")
+		if err != nil {
+			return err
+		}
+		var var_7 string = strconv.Itoa(user)
+		_, err = templBuffer.WriteString(templ.EscapeString(var_7))
+		if err != nil {
+			return err
+		}
+		_, err = templBuffer.WriteString("</h1><p class=\"subtitle has-text-centerd\">")
+		if err != nil {
+			return err
+		}
+		var_8 := `Session`
+		_, err = templBuffer.WriteString(var_8)
+		if err != nil {
+			return err
+		}
+		_, err = templBuffer.WriteString("</p><div><button class=\"button is-secondary\" type=\"submit\" name=\"")
+		if err != nil {
+			return err
+		}
+		_, err = templBuffer.WriteString(templ.EscapeString(CountsForm.Session))
+		if err != nil {
+			return err
+		}
+		_, err = templBuffer.WriteString("\" value=\"")
+		if err != nil {
+			return err
+		}
+		_, err = templBuffer.WriteString(templ.EscapeString(CountsForm.Session))
+		if err != nil {
+			return err
+		}
+		_, err = templBuffer.WriteString("\">")
+		if err != nil {
+			return err
+		}
+		var_9 := `+1`
+		_, err = templBuffer.WriteString(var_9)
+		if err != nil {
+			return err
+		}
+		_, err = templBuffer.WriteString("</button></div></div></div></form>")
 		if err != nil {
 			return err
 		}
@@ -71,17 +171,17 @@ func Form() templ.Component {
 			defer templ.ReleaseBuffer(templBuffer)
 		}
 		ctx = templ.InitializeContext(ctx)
-		var_6 := templ.GetChildren(ctx)
-		if var_6 == nil {
-			var_6 = templ.NopComponent
+		var_10 := templ.GetChildren(ctx)
+		if var_10 == nil {
+			var_10 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
 		_, err = templBuffer.WriteString("<form action=\"/\" method=\"POST\"><div><button type=\"submit\" name=\"global\" value=\"global\">")
 		if err != nil {
 			return err
 		}
-		var_7 := `Global`
-		_, err = templBuffer.WriteString(var_7)
+		var_11 := `Global`
+		_, err = templBuffer.WriteString(var_11)
 		if err != nil {
 			return err
 		}
@@ -89,8 +189,8 @@ func Form() templ.Component {
 		if err != nil {
 			return err
 		}
-		var_8 := `User`
-		_, err = templBuffer.WriteString(var_8)
+		var_12 := `User`
+		_, err = templBuffer.WriteString(var_12)
 		if err != nil {
 			return err
 		}
@@ -113,17 +213,17 @@ func Header() templ.Component {
 			defer templ.ReleaseBuffer(templBuffer)
 		}
 		ctx = templ.InitializeContext(ctx)
-		var_9 := templ.GetChildren(ctx)
-		if var_9 == nil {
-			var_9 = templ.NopComponent
+		var_13 := templ.GetChildren(ctx)
+		if var_13 == nil {
+			var_13 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
 		_, err = templBuffer.WriteString("<head><script src=\"/htmx.min.js\">")
 		if err != nil {
 			return err
 		}
-		var_10 := ``
-		_, err = templBuffer.WriteString(var_10)
+		var_14 := ``
+		_, err = templBuffer.WriteString(var_14)
 		if err != nil {
 			return err
 		}

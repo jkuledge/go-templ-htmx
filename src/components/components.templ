@@ -2,13 +2,37 @@ package components
 
 import "strconv"
 
-
+// TODO: idk if i like this for "typing" my form
+var CountsForm = struct {
+    Global string
+    Session string
+}{
+    Global: "global",
+    Session: "session",
+}
 
 templ Counts(global, user int) {
-    <div>Global: { strconv.Itoa(global) }</div>
-    <div>
-        User: { strconv.Itoa(user) }
-    </div>
+    <form 
+        id="countsForm"
+        action="/"
+        method="POST"
+        hx-post="/"
+        hx-select="#countsForm"
+        hx-swap="outerHTML"
+    >
+        <div class="columns">
+            <div class={ "column", "has-text-centered", "is-primary", "border" }>
+                <h1 class="title is-size-1 has-text-centered">{ strconv.Itoa(global) }</h1>
+                <p class="subtitle has-text-centerd">Global</p>
+                <div><button class="button is-primary" type="submit" name={CountsForm.Global} value={CountsForm.Global}>+1</button></div>
+            </div>
+            <div class={ "column", "has-text-centered", "border" }>
+                <h1 class="title is-size-1 has-text-centered">{ strconv.Itoa(user) }</h1>
+                <p class="subtitle has-text-centerd">Session</p>
+                <div><button class="button is-secondary" type="submit" name={CountsForm.Session} value={CountsForm.Session}>+1</button></div>
+            </div>
+        </div>
+    </form>
 }
 
 templ Form() {

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"go-templ/src/components"
 	"go-templ/src/pages"
 	"log"
 	"net/http"
@@ -28,11 +29,11 @@ func postHandler(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 
 	// check if global button has been pressed
-	if r.Form.Has("global") {
+	if r.Form.Has(components.CountsForm.Global) {
 		global.Count++
 	}
 
-	if r.Form.Has("user") {
+	if r.Form.Has(components.CountsForm.Session) {
 		currentCount := sessionManager.GetInt(r.Context(), "count")
 		sessionManager.Put(r.Context(), "count", currentCount+1)
 	}
