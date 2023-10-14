@@ -1,0 +1,19 @@
+package layouts
+
+templ Header() {
+    <head>
+        <script src="htmx/htmx.min.js"></script>
+        <link href="/dist/output.css" rel="stylesheet" />
+    </head>
+}
+
+templ PageWrapper() {
+    @Header()
+    <body>
+        <div>
+            <div id="wrapper">
+                { children... }
+            </div>
+        </div>
+    </body>
+}

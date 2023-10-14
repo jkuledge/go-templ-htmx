@@ -1,16 +1,21 @@
 package pages
 
-import "go-templ/src/components"
+import (
+    "go-templ/src/components"
+    "go-templ/src/layouts"
+)
+
 
 templ Page(global, user int) {
-    @components.Header()
-    @components.Counts(global, user)
-    <body>
-        <h1 class="text-3xl font-bold underline text-blue-600">
-            Hello world!
-        </h1>
-        <button hx-post="/clicked" hx-swap="outerHTML">
-            Click Me
-        </button>
-    </body>
+    @layouts.PageWrapper() {
+        @components.Counts(global, user)
+        <body>
+            <h1 class="text-3xl font-bold underline text-blue-600">
+                Hello world!
+            </h1>
+            <button hx-post="/clicked" hx-swap="outerHTML">
+                Click Me
+            </button>
+        </body>
+    }
 }
