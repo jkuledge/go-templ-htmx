@@ -1,6 +1,7 @@
 package main
 
 import (
+	"embed"
 	"fmt"
 	"go-templ/src/components"
 	"go-templ/src/pages"
@@ -50,11 +51,22 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 	getHandler(w, r)
 }
 
+var (
+
+	//go:embed dist/output.css
+	css embed.FS
+
+	//go:embed htmx/htmx.min.js
+	htmx embed.FS
+)
+
 func main() {
 
 	// initialize static dir
-	fs := http.FileServer(http.Dir("./htmx"))
-	http.Handle("/htmx/", http.StripPrefix("/htmx/", fs))
+	// fs := http.FileServer(http.Dir("./htmx"))
+	// http.Handle("/htmx/", http.StripPrefix("/htmx/", fs))
+	// styles := http.FileServer(http.Dir("./dist"))
+	// http.Handle("/dist/", http.StripPrefix("/dist/", styles))
 
 	// Initialize the session.
 	sessionManager = scs.New()
@@ -62,8 +74,17 @@ func main() {
 
 	mux := http.NewServeMux()
 
+	mux.Handle("/dist/output.css", http.FileServer(http.FS(css)))
+	mux.Handle("/htmx/htmx.min.js", http.FileServer(http.FS(htmx)))
+
 	// Handle POST and GET requests.
 	mux.HandleFunc("/", rootHandler)
+
+	mux.HandleFunc("/clicked", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == http.MethodPost {
+			components.Clicked().Render(r.Context(), w)
+		}
+	})
 
 	// Add the middleware.
 	muxWithSessionMiddleware := sessionManager.LoadAndSave(mux)

@@ -11,6 +11,7 @@ import "bytes"
 
 import "strconv"
 
+// TODO: idk if i like this for "typing" my form
 var CountsForm = struct {
 	Global  string
 	Session string
@@ -218,7 +219,7 @@ func Header() templ.Component {
 			var_13 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, err = templBuffer.WriteString("<head><script src=\"/htmx.min.js\">")
+		_, err = templBuffer.WriteString("<head><script src=\"htmx/htmx.min.js\">")
 		if err != nil {
 			return err
 		}
@@ -227,7 +228,7 @@ func Header() templ.Component {
 		if err != nil {
 			return err
 		}
-		_, err = templBuffer.WriteString("</script></head>")
+		_, err = templBuffer.WriteString("</script><link href=\"/dist/output.css\" rel=\"stylesheet\"></head>")
 		if err != nil {
 			return err
 		}
