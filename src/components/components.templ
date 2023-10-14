@@ -1,17 +1,17 @@
-package main
+package components
 
 import "strconv"
 
 
 
-templ counts(global, user int) {
+templ Counts(global, user int) {
     <div>Global: { strconv.Itoa(global) }</div>
     <div>
         User: { strconv.Itoa(user) }
     </div>
 }
 
-templ form() {
+templ Form() {
     <form action="/" method="POST">
         <div>
             <button type="submit" name="global" value="global">Global</button>
@@ -22,14 +22,14 @@ templ form() {
     </form>
 }
 
-templ header() {
+templ Header() {
     <head>
         <script src="/htmx.min.js"></script>
     </head>
 }
 
-templ page(global, user int) {
-    @header()
-    @counts(global, user)
-    @form()
+templ Page(global, user int) {
+    @Header()
+    @Counts(global, user)
+    @Form()
 }
