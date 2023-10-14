@@ -24,12 +24,21 @@ templ Counts(global, user int) {
             <div class={ "column", "has-text-centered", "is-primary", "border" }>
                 <h1 class="title is-size-1 has-text-centered">{ strconv.Itoa(global) }</h1>
                 <p class="subtitle has-text-centerd">Global</p>
-                <div><button class="button is-primary" type="submit" name={CountsForm.Global} value={CountsForm.Global}>+1</button></div>
+                <div>
+                    <button
+                        class="btn"
+                        type="submit"
+                        name={CountsForm.Global}
+                        value={CountsForm.Global}
+                    >
+                        +1
+                    </button>
+                </div>
             </div>
             <div class={ "column", "has-text-centered", "border" }>
                 <h1 class="title is-size-1 has-text-centered">{ strconv.Itoa(user) }</h1>
                 <p class="subtitle has-text-centerd">Session</p>
-                <div><button class="button is-secondary" type="submit" name={CountsForm.Session} value={CountsForm.Session}>+1</button></div>
+                <div><button class="btn is-secondary" type="submit" name={CountsForm.Session} value={CountsForm.Session}>+1</button></div>
             </div>
         </div>
     </form>

@@ -14,8 +14,9 @@ templ Page(global, user int) {
             <h1 class="text-3xl font-bold underline text-blue-600">
                 Hello world!
             </h1>
-            <button hx-post="/clicked" hx-swap="outerHTML">
+            <button class="btn" hx-post="/clicked" hx-swap="outerHTML">
                 Click Me
+                <p class="htmx-indicator loading loading-spinner"></p>
             </button>
         </body>
     }

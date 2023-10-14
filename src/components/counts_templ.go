@@ -68,7 +68,7 @@ func Counts(global, user int) templ.Component {
 		if err != nil {
 			return err
 		}
-		_, err = templBuffer.WriteString("</p><div><button class=\"button is-primary\" type=\"submit\" name=\"")
+		_, err = templBuffer.WriteString("</p><div><button class=\"btn\" type=\"submit\" name=\"")
 		if err != nil {
 			return err
 		}
@@ -128,7 +128,7 @@ func Counts(global, user int) templ.Component {
 		if err != nil {
 			return err
 		}
-		_, err = templBuffer.WriteString("</p><div><button class=\"button is-secondary\" type=\"submit\" name=\"")
+		_, err = templBuffer.WriteString("</p><div><button class=\"btn is-secondary\" type=\"submit\" name=\"")
 		if err != nil {
 			return err
 		}

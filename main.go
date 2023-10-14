@@ -82,6 +82,7 @@ func main() {
 
 	mux.HandleFunc("/clicked", func(w http.ResponseWriter, r *http.Request) {
 		if r.Method == http.MethodPost {
+			time.Sleep(2 * time.Second) // simulate loading
 			components.Clicked().Render(r.Context(), w)
 		}
 	})

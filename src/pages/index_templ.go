@@ -54,7 +54,7 @@ func Page(global, user int) templ.Component {
 			if err != nil {
 				return err
 			}
-			_, err = templBuffer.WriteString("</h1><button hx-post=\"/clicked\" hx-swap=\"outerHTML\">")
+			_, err = templBuffer.WriteString("</h1><button class=\"btn\" hx-post=\"/clicked\" hx-swap=\"outerHTML\">")
 			if err != nil {
 				return err
 			}
@@ -63,7 +63,7 @@ func Page(global, user int) templ.Component {
 			if err != nil {
 				return err
 			}
-			_, err = templBuffer.WriteString("</button></body>")
+			_, err = templBuffer.WriteString(" <p class=\"htmx-indicator loading loading-spinner\"></p></button></body>")
 			if err != nil {
 				return err
 			}
