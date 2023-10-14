@@ -8,12 +8,14 @@ templ Header() {
 }
 
 templ PageWrapper() {
-    @Header()
-    <body>
-        <div>
-            <div id="wrapper">
-                { children... }
+    <html data-theme="cupcake">
+        @Header()
+        <body>
+            <div>
+                <div id="wrapper">
+                    { children... }
+                </div>
             </div>
-        </div>
-    </body>
+        </body>
+    </html>
 }

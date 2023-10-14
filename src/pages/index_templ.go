@@ -33,6 +33,14 @@ func Page(global, user int) templ.Component {
 				templBuffer = templ.GetBuffer()
 				defer templ.ReleaseBuffer(templBuffer)
 			}
+			err = components.NavBar().Render(ctx, templBuffer)
+			if err != nil {
+				return err
+			}
+			_, err = templBuffer.WriteString(" ")
+			if err != nil {
+				return err
+			}
 			err = components.Counts(global, user).Render(ctx, templBuffer)
 			if err != nil {
 				return err

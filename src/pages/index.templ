@@ -8,6 +8,7 @@ import (
 
 templ Page(global, user int) {
     @layouts.PageWrapper() {
+        @components.NavBar()
         @components.Counts(global, user)
         <body>
             <h1 class="text-3xl font-bold underline text-blue-600">

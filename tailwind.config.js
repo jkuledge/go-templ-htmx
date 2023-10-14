@@ -4,6 +4,6 @@ content: ["./src/**/*.templ"],
   theme: {
     extend: {},
   },
-  plugins: [],
+  plugins: [require("daisyui")],
 }
 

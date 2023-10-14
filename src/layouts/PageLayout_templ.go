@@ -55,6 +55,10 @@ func PageWrapper() templ.Component {
 			var_3 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
+		_, err = templBuffer.WriteString("<html data-theme=\"cupcake\">")
+		if err != nil {
+			return err
+		}
 		err = Header().Render(ctx, templBuffer)
 		if err != nil {
 			return err
@@ -67,7 +71,7 @@ func PageWrapper() templ.Component {
 		if err != nil {
 			return err
 		}
-		_, err = templBuffer.WriteString("</div></div></body>")
+		_, err = templBuffer.WriteString("</div></div></body></html>")
 		if err != nil {
 			return err
 		}
