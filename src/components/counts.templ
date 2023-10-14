@@ -34,21 +34,3 @@ templ Counts(global, user int) {
         </div>
     </form>
 }
-
-templ Form() {
-    <form action="/" method="POST">
-        <div>
-            <button type="submit" name="global" value="global">Global</button>
-        </div>
-        <div>
-            <button type="submit" name="user" value="user">User</button>
-        </div>
-    </form>
-}
-
-templ Header() {
-    <head>
-        <script src="htmx/htmx.min.js"></script>
-        <link href="/dist/output.css" rel="stylesheet" />
-    </head>
-}
