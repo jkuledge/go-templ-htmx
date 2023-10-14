@@ -27,9 +27,3 @@ templ Header() {
         <script src="/htmx.min.js"></script>
     </head>
 }
-
-templ Page(global, user int) {
-    @Header()
-    @Counts(global, user)
-    @Form()
-}

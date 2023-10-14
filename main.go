@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"go-templ/src/components"
+	"go-templ/src/pages"
 	"log"
 	"net/http"
 	"time"
@@ -19,7 +19,7 @@ var sessionManager *scs.SessionManager
 
 func getHandler(w http.ResponseWriter, r *http.Request) {
 	userCount := sessionManager.GetInt(r.Context(), "count")
-	component := components.Page(global.Count, userCount)
+	component := pages.Page(global.Count, userCount)
 	component.Render(r.Context(), w)
 }
 

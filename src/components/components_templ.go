@@ -137,35 +137,3 @@ func Header() templ.Component {
 		return err
 	})
 }
-
-func Page(global, user int) templ.Component {
-	return templ.ComponentFunc(func(ctx context.Context, w io.Writer) (err error) {
-		templBuffer, templIsBuffer := w.(*bytes.Buffer)
-		if !templIsBuffer {
-			templBuffer = templ.GetBuffer()
-			defer templ.ReleaseBuffer(templBuffer)
-		}
-		ctx = templ.InitializeContext(ctx)
-		var_11 := templ.GetChildren(ctx)
-		if var_11 == nil {
-			var_11 = templ.NopComponent
-		}
-		ctx = templ.ClearChildren(ctx)
-		err = Header().Render(ctx, templBuffer)
-		if err != nil {
-			return err
-		}
-		err = Counts(global, user).Render(ctx, templBuffer)
-		if err != nil {
-			return err
-		}
-		err = Form().Render(ctx, templBuffer)
-		if err != nil {
-			return err
-		}
-		if !templIsBuffer {
-			_, err = templBuffer.WriteTo(w)
-		}
-		return err
-	})
-}
