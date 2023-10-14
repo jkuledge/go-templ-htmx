@@ -105,7 +105,7 @@ func form() templ.Component {
 	})
 }
 
-func page(global, user int) templ.Component {
+func header() templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, w io.Writer) (err error) {
 		templBuffer, templIsBuffer := w.(*bytes.Buffer)
 		if !templIsBuffer {
@@ -118,6 +118,43 @@ func page(global, user int) templ.Component {
 			var_9 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
+		_, err = templBuffer.WriteString("<head><script src=\"/htmx.min.js\">")
+		if err != nil {
+			return err
+		}
+		var_10 := ``
+		_, err = templBuffer.WriteString(var_10)
+		if err != nil {
+			return err
+		}
+		_, err = templBuffer.WriteString("</script></head>")
+		if err != nil {
+			return err
+		}
+		if !templIsBuffer {
+			_, err = templBuffer.WriteTo(w)
+		}
+		return err
+	})
+}
+
+func page(global, user int) templ.Component {
+	return templ.ComponentFunc(func(ctx context.Context, w io.Writer) (err error) {
+		templBuffer, templIsBuffer := w.(*bytes.Buffer)
+		if !templIsBuffer {
+			templBuffer = templ.GetBuffer()
+			defer templ.ReleaseBuffer(templBuffer)
+		}
+		ctx = templ.InitializeContext(ctx)
+		var_11 := templ.GetChildren(ctx)
+		if var_11 == nil {
+			var_11 = templ.NopComponent
+		}
+		ctx = templ.ClearChildren(ctx)
+		err = header().Render(ctx, templBuffer)
+		if err != nil {
+			return err
+		}
 		err = counts(global, user).Render(ctx, templBuffer)
 		if err != nil {
 			return err

@@ -49,6 +49,11 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+
+	// initialize static dir
+	fs := http.FileServer(http.Dir("./htmx"))
+	http.Handle("/htmx/", http.StripPrefix("/htmx/", fs))
+
 	// Initialize the session.
 	sessionManager = scs.New()
 	sessionManager.Lifetime = 24 * time.Hour

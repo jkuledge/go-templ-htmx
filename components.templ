@@ -22,7 +22,14 @@ templ form() {
     </form>
 }
 
+templ header() {
+    <head>
+        <script src="/htmx.min.js"></script>
+    </head>
+}
+
 templ page(global, user int) {
+    @header()
     @counts(global, user)
     @form()
 }
