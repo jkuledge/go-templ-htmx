@@ -4,6 +4,7 @@ import (
 	"embed"
 	"fmt"
 	"go-templ/src/components"
+	"go-templ/src/handlers"
 	"go-templ/src/pages"
 	"log"
 	"net/http"
@@ -62,12 +63,6 @@ var (
 
 func main() {
 
-	// initialize static dir
-	// fs := http.FileServer(http.Dir("./htmx"))
-	// http.Handle("/htmx/", http.StripPrefix("/htmx/", fs))
-	// styles := http.FileServer(http.Dir("./dist"))
-	// http.Handle("/dist/", http.StripPrefix("/dist/", styles))
-
 	// Initialize the session.
 	sessionManager = scs.New()
 	sessionManager.Lifetime = 24 * time.Hour
@@ -86,6 +81,8 @@ func main() {
 			components.Clicked().Render(r.Context(), w)
 		}
 	})
+
+	mux.HandleFunc("/login", handlers.HandleLogin)
 
 	// Add the middleware.
 	muxWithSessionMiddleware := sessionManager.LoadAndSave(mux)
